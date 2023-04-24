@@ -5,6 +5,9 @@ on:
     workflows: ["pages-build-deployment"]
     types: [completed]
 
+env:
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
 jobs:
   on-success:
     name: Index docs for fastkafka chat application
