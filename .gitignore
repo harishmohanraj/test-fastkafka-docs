@@ -168,3 +168,4 @@ mkdocs/site/
 
 # Ignore trashbins
 .Trash*
+token
