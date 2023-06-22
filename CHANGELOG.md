@@ -2,6 +2,89 @@
 
 <!-- do not remove -->
 
+## 0.7.0
+
+### New Features
+
+- Optional description argument to consumes and produces decorator implemented ([#338](https://github.com/airtai/fastkafka/pull/338)), thanks to [@Sternakt](https://github.com/Sternakt)
+  - Consumes and produces decorators now have optional `description` argument that is used instead of function docstring in async doc generation when specified
+
+- FastKafka Windows OS support enabled ([#326](https://github.com/airtai/fastkafka/pull/326)), thanks to [@kumaranvpl](https://github.com/kumaranvpl)
+  - FastKafka can now run on Windows
+
+- FastKafka and FastAPI integration implemented ([#304](https://github.com/airtai/fastkafka/pull/304)), thanks to [@kumaranvpl](https://github.com/kumaranvpl)
+  - FastKafka can now be run alongside FastAPI
+
+- Batch consuming option to consumers implemented ([#298](https://github.com/airtai/fastkafka/pull/298)), thanks to [@Sternakt](https://github.com/Sternakt)
+  - Consumers can consume events in batches by specifying msg type of consuming function as `List[YourMsgType]` 
+
+- Removed support for synchronous produce functions ([#295](https://github.com/airtai/fastkafka/pull/295)), thanks to [@kumaranvpl](https://github.com/kumaranvpl)
+
+- Added default broker values and update docs ([#292](https://github.com/airtai/fastkafka/pull/292)), thanks to [@Sternakt](https://github.com/Sternakt)
+
+### Bugs Squashed
+
+- Fix index.ipynb to be runnable in colab ([#342](https://github.com/airtai/fastkafka/issues/342))
+
+- Use cli option root_path docs generate and serve CLI commands ([#341](https://github.com/airtai/fastkafka/pull/341)), thanks to [@kumaranvpl](https://github.com/kumaranvpl)
+
+- Fix incorrect asyncapi docs path on fastkafka docs serve command ([#335](https://github.com/airtai/fastkafka/pull/335)), thanks to [@Sternakt](https://github.com/Sternakt)
+  - Serve docs now takes app `root_path` argument into consideration when specified in app
+
+- Fix typo (supress_timestamps->suppress_timestamps) and remove fix for enabling timestamps ([#315](https://github.com/airtai/fastkafka/issues/315))
+
+- Fix logs printing timestamps ([#308](https://github.com/airtai/fastkafka/issues/308))
+
+- Fix topics with dots causing failure of tester instantiation ([#306](https://github.com/airtai/fastkafka/pull/306)), thanks to [@Sternakt](https://github.com/Sternakt)
+  - Specified topics can now have "." in their names
+
+## 0.6.0
+
+### New Features
+
+- Timestamps added to CLI commands ([#283](https://github.com/airtai/fastkafka/pull/283)), thanks to [@davorrunje](https://github.com/davorrunje)
+
+- Added option to process messages concurrently ([#278](https://github.com/airtai/fastkafka/pull/278)), thanks to [@Sternakt](https://github.com/Sternakt)
+  - A new `executor` option is added that supports either sequential processing for tasks with small latencies or concurrent processing for tasks with larger latencies.
+
+- Add consumes and produces functions to app ([#274](https://github.com/airtai/fastkafka/pull/274)), thanks to [@Sternakt](https://github.com/Sternakt)
+
+
+- Add batching for producers ([#273](https://github.com/airtai/fastkafka/pull/273)), thanks to [@Sternakt](https://github.com/Sternakt)
+  - requirement(batch): batch support is a real need! and i see it on the issue list.... so hope we do not need to wait too long
+
+    https://discord.com/channels/1085457301214855171/1090956337938182266/1098592795557630063
+
+- Fix broken links in guides ([#272](https://github.com/airtai/fastkafka/pull/272)), thanks to [@harishmohanraj](https://github.com/harishmohanraj)
+
+- Generate the docusaurus sidebar dynamically by parsing summary.md ([#270](https://github.com/airtai/fastkafka/pull/270)), thanks to [@harishmohanraj](https://github.com/harishmohanraj)
+
+- Metadata passed to consumer ([#269](https://github.com/airtai/fastkafka/pull/269)), thanks to [@Sternakt](https://github.com/Sternakt)
+  - requirement(key): read the key value somehow..Maybe I missed something in the docs
+    requirement(header): read header values, Reason: I use CDC | Debezium and in the current system the header values are important to differentiate between the CRUD operations.
+
+    https://discord.com/channels/1085457301214855171/1090956337938182266/1098592795557630063
+
+- Contribution with instructions how to build and test added ([#255](https://github.com/airtai/fastkafka/pull/255)), thanks to [@Sternakt](https://github.com/Sternakt)
+
+
+- Export encoders, decoders from fastkafka.encoder ([#246](https://github.com/airtai/fastkafka/pull/246)), thanks to [@kumaranvpl](https://github.com/kumaranvpl)
+
+
+- Create a Github action file to automatically index the website and commit it to the FastKafkachat repository. ([#239](https://github.com/airtai/fastkafka/issues/239))
+
+
+- UI Improvement: Post screenshots with links to the actual messages in testimonials section ([#228](https://github.com/airtai/fastkafka/issues/228))
+
+### Bugs Squashed
+
+- Batch testing fix ([#280](https://github.com/airtai/fastkafka/pull/280)), thanks to [@Sternakt](https://github.com/Sternakt)
+
+- Tester breaks when using Batching or KafkaEvent producers ([#279](https://github.com/airtai/fastkafka/issues/279))
+
+- Consumer loop callbacks are not executing in parallel ([#276](https://github.com/airtai/fastkafka/issues/276))
+
+
 ## 0.5.0
 
 ### New Features

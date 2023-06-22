@@ -209,7 +209,7 @@ how you can use `trivy` to scan your `fastkafka_project_image`:
 
 1.  Install `trivy` on your local machine by following the instructions
     provided in the [official `trivy`
-    documentation](https://github.com/aquasecurity/trivy#installation).
+    documentation](https://aquasecurity.github.io/trivy/latest/getting-started/installation/).
 
 2.  Run the following command to scan your fastkafka_project_image:
 

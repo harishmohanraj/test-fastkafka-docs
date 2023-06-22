@@ -33,6 +33,7 @@ requirements = [
     "docstring-parser>=0.15",
     "typer>=0.7.0",
     "nest-asyncio>=1.5.6",
+    "psutil>=5.9.5;platform_system=='Windows'",
 ]
 avro_requirements = [
     "fastavro>=1.7.3"
@@ -53,19 +54,22 @@ lic = licenses.get(cfg['license'].lower(), (cfg['license'], None))
 dev_requirements = [
     "nbconvert>=7.2.9",
     "nbformat>=5.7.3",
-    "nbdev-mkdocs==0.4.0",
-    "mypy==1.0.1",
-    "pre-commit==3.0.4",
+    "nbdev-mkdocs==0.5.0",
+    "mypy==1.3.0",
+    "pre-commit==3.3.1",
     "nbqa==1.6.3",
-    "black==23.1.0",
+    "black==23.3.0",
     "isort==5.12.0",
-    "bandit==1.7.4",
-    "semgrep==1.14.0",
-    "pytest==7.2.1",
+    "bandit==1.7.5",
+    "semgrep==1.21.0",
+    "pytest==7.3.1",
     "numpy>=1.21.0",
     "pandas>=1.2.0",
     "email-validator==1.3.1",
     "scikit-learn==1.2.1",
+    "ipython<8.13",
+    "fastapi>=0.95.1",
+    "uvicorn==0.22.0",
 ]
 
 project_urls = {

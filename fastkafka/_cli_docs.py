@@ -5,9 +5,11 @@ __all__ = ['logger', 'docs_install_deps', 'generate_docs', 'serve_docs']
 
 # %% ../nbs/024_CLI_Docs.ipynb 1
 import asyncio
+import platform
 import signal
 import socketserver
 from http.server import SimpleHTTPRequestHandler
+from pathlib import Path
 from types import FrameType
 from typing import *
 
@@ -33,6 +35,12 @@ _docs_app = typer.Typer(help="Commands for managing fastkafka app documentation"
     help="Installs dependencies for FastKafka documentation generation",
 )
 def docs_install_deps() -> None:
+    """
+    Installs dependencies for FastKafka documentation generation.
+
+    Raises:
+        typer.Abort: If the user chooses not to install NodeJS and npm locally.
+    """
     try:
         _check_npm_with_local()
     except Exception as e:
@@ -53,16 +61,34 @@ def docs_install_deps() -> None:
     help="Generates documentation for a FastKafka application",
 )
 def generate_docs(
-    root_path: str = typer.Option(
-        ".", help="root path under which documentation will be created"
+    root_path: Optional[str] = typer.Option(
+        default=None,
+        help="root path under which documentation will be created; default is current directory",
+        show_default=False,
     ),
     app: str = typer.Argument(
         ...,
         help="input in the form of 'path:app', where **path** is the path to a python file and **app** is an object of type **FastKafka**.",
     ),
 ) -> None:
+    """
+    Generates documentation for a FastKafka application.
+
+    Args:
+        root_path: The root path under which the documentation will be created.
+            Default is the current directory.
+        app: Input in the form of 'path:app', where **path** is the path to a python
+            file and **app** is an object of type **FastKafka**.
+
+    Raises:
+        typer.Exit: If there is an unexpected internal error.
+    """
     try:
         application = _import_from_string(app)
+        if root_path is not None:
+            application._root_path = Path(root_path)
+            application._asyncapi_path = application._root_path / "asyncapi"
+
         application.skip_docs = False
         application.create_docs()
     except Exception as e:
@@ -76,7 +102,9 @@ def generate_docs(
 )
 def serve_docs(
     root_path: str = typer.Option(
-        ".", help="root path under which documentation will be created"
+        default=None,
+        help="root path under which documentation will be created; default is current directory",
+        show_default=False,
     ),
     bind: str = typer.Option("127.0.0.1", help="Some info"),
     port: int = typer.Option(8000, help="Some info"),
@@ -85,10 +113,28 @@ def serve_docs(
         help="input in the form of 'path:app', where **path** is the path to a python file and **app** is an object of type **FastKafka**.",
     ),
 ) -> None:
+    """
+    Generates and serves documentation for a FastKafka application.
+
+    Args:
+        root_path: The root path under which the documentation will be created.
+            Default is the current directory.
+        bind: The IP address to bind the server to. Default is '127.0.0.1'.
+        port: The port number to bind the server to. Default is 8000.
+        app: Input in the form of 'path:app', where **path** is the path to a python
+            file and **app** is an object of type **FastKafka**.
+
+    Raises:
+        typer.Exit: If there is an unexpected internal error.
+    """
     try:
         application = _import_from_string(app)
+        if root_path is not None:
+            application._root_path = Path(root_path)
+            application._asyncapi_path = application._root_path / "asyncapi"
+
         application.create_docs()
-        with change_dir("asyncapi/docs/"):
+        with change_dir(str(application._asyncapi_path / "docs")):
             server_address = (bind, port)
             handler = SimpleHTTPRequestHandler
 
@@ -101,6 +147,8 @@ def serve_docs(
 
             signal.signal(signal.SIGINT, sigint_handler)
             signal.signal(signal.SIGTERM, sigint_handler)
+            if platform.system() == "Windows":
+                signal.signal(signal.SIGBREAK, sigint_handler)  # type: ignore
 
             with socketserver.TCPServer(server_address, handler) as httpd:
                 httpd.timeout = 0.1

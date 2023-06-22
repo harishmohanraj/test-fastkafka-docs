@@ -14,7 +14,7 @@ import nest_asyncio
 
 from .._components._subprocess import terminate_asyncio_process
 from .._components.helpers import in_notebook
-from .._components.logger import get_logger, supress_timestamps
+from .._components.logger import get_logger
 from .._components.meta import delegates, export, patch
 from .apache_kafka_broker import get_free_port, run_and_match
 
@@ -116,6 +116,15 @@ class LocalRedpandaBroker:
 
     @property
     def is_started(self) -> bool:
+        """Property indicating whether the LocalRedpandaBroker object is started.
+
+        The is_started property indicates if the LocalRedpandaBroker object is currently
+        in a started state. This implies that Redpanda docker container has sucesfully
+        started and is ready for handling events.
+
+        Returns:
+            bool: True if the object is started, False otherwise.
+        """
         return self._is_started
 
     @classmethod
@@ -189,9 +198,23 @@ class LocalRedpandaBroker:
         await self._stop()
 
 # %% ../../nbs/003_LocalRedpandaBroker.ipynb 10
-async def check_docker() -> bool:
+async def check_docker(tag: str = "v23.1.2") -> bool:
+    """
+    Checks if a Docker image with the specified tag is available.
+
+    Args:
+        tag: The tag of the Docker image to check. Defaults to "v23.1.2".
+
+    Returns:
+        bool: True if the Docker image is available; False otherwise.
+    """
     try:
-        docker_task = await run_and_match("docker", "-v", pattern="Docker version")
+        docker_task = await run_and_match(
+            "docker",
+            "pull",
+            f"docker.redpanda.com/redpandadata/redpanda:{tag}",
+            pattern=f"docker.redpanda.com/redpandadata/redpanda:{tag}",
+        )
         return True
     except Exception as e:
         logger.debug(f"Error in check_docker() : {e}")

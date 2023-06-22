@@ -108,7 +108,7 @@ $ fastkafka run [OPTIONS] APP
 
 **Options**:
 
-* `--num-workers INTEGER`: Number of FastKafka instances to run, defaults to number of CPU cores.  [default: 8]
+* `--num-workers INTEGER`: Number of FastKafka instances to run, defaults to number of CPU cores.  [default: 64]
 * `--kafka-broker TEXT`: kafka_broker, one of the keys of the kafka_brokers dictionary passed in the constructor of FastaKafka class.  [required]
 * `--help`: Show this message and exit.
 

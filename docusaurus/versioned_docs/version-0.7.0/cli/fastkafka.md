@@ -54,7 +54,7 @@ $ fastkafka docs generate [OPTIONS] APP
 
 **Options**:
 
-* `--root-path TEXT`: root path under which documentation will be created  [default: .]
+* `--root-path TEXT`: root path under which documentation will be created; default is current directory
 * `--help`: Show this message and exit.
 
 ### `fastkafka docs install_deps`
@@ -87,7 +87,7 @@ $ fastkafka docs serve [OPTIONS] APP
 
 **Options**:
 
-* `--root-path TEXT`: root path under which documentation will be created  [default: .]
+* `--root-path TEXT`: root path under which documentation will be created; default is current directory
 * `--bind TEXT`: Some info  [default: 127.0.0.1]
 * `--port INTEGER`: Some info  [default: 8000]
 * `--help`: Show this message and exit.
@@ -108,8 +108,8 @@ $ fastkafka run [OPTIONS] APP
 
 **Options**:
 
-* `--num-workers INTEGER`: Number of FastKafka instances to run, defaults to number of CPU cores.  [default: 8]
-* `--kafka-broker TEXT`: kafka_broker, one of the keys of the kafka_brokers dictionary passed in the constructor of FastaKafka class.  [required]
+* `--num-workers INTEGER`: Number of FastKafka instances to run, defaults to number of CPU cores.  [default: 4]
+* `--kafka-broker TEXT`: kafka_broker, one of the keys of the kafka_brokers dictionary passed in the constructor of FastaKafka class.  [default: localhost]
 * `--help`: Show this message and exit.
 
 ## `fastkafka testing`
