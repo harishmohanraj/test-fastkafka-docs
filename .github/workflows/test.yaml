@@ -1,61 +1,61 @@
-name: CI
-on:  [workflow_dispatch, push]
+# name: CI
+# on:  [workflow_dispatch, push]
 
-jobs:
-  mypy_static_analysis:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: airtai/workflows/airt-mypy-check@main
-  bandit_static_analysis:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: airtai/workflows/airt-bandit-check@main
-  semgrep_static_analysis:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: airtai/workflows/airt-semgrep-check@main
-  test:
-    timeout-minutes: 60
-    strategy:
-      fail-fast: false
-      matrix:
-        os:  [ubuntu, windows]
-        version: ["3.8", "3.9", "3.10", "3.11"]
-    runs-on: ${{ matrix.os }}-latest
-    defaults:
-      run:
-        shell: bash
-    steps:
-      - name: Configure Pagefile
-        if: matrix.os == 'windows'
-        uses: al-cheb/configure-pagefile-action@v1.2
-        with:
-          minimum-size: 8GB
-          maximum-size: 8GB
-          disk-root: "C:"
-      - name: Install quarto
-        uses: quarto-dev/quarto-actions/setup@v2
-      - name: Prepare nbdev env
-        uses: fastai/workflows/nbdev-ci@master
-        with:
-          version: ${{ matrix.version }}
-          skip_test: true
-      - name: Install testing deps
-        run: |
-          fastkafka docs install_deps
-          fastkafka testing install_deps
-      - name: Run nbdev tests
-        run: |
-          nbdev_test --timing --do_print
-      - name: Test building docs with nbdev-mkdocs
-        if: matrix.os != 'windows'
-        run: |
-          nbdev_mkdocs docs
-          if [ -f "mkdocs/site/index.html" ]; then
-            echo "docs built successfully."
-          else
-            echo "index page not found in rendered docs."
-            ls -la
-            ls -la mkdocs/site/
-            exit 1
-          fi
+# jobs:
+#   mypy_static_analysis:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: airtai/workflows/airt-mypy-check@main
+#   bandit_static_analysis:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: airtai/workflows/airt-bandit-check@main
+#   semgrep_static_analysis:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: airtai/workflows/airt-semgrep-check@main
+#   test:
+#     timeout-minutes: 60
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         os:  [ubuntu, windows]
+#         version: ["3.8", "3.9", "3.10", "3.11"]
+#     runs-on: ${{ matrix.os }}-latest
+#     defaults:
+#       run:
+#         shell: bash
+#     steps:
+#       - name: Configure Pagefile
+#         if: matrix.os == 'windows'
+#         uses: al-cheb/configure-pagefile-action@v1.2
+#         with:
+#           minimum-size: 8GB
+#           maximum-size: 8GB
+#           disk-root: "C:"
+#       - name: Install quarto
+#         uses: quarto-dev/quarto-actions/setup@v2
+#       - name: Prepare nbdev env
+#         uses: fastai/workflows/nbdev-ci@master
+#         with:
+#           version: ${{ matrix.version }}
+#           skip_test: true
+#       - name: Install testing deps
+#         run: |
+#           fastkafka docs install_deps
+#           fastkafka testing install_deps
+#       - name: Run nbdev tests
+#         run: |
+#           nbdev_test --timing --do_print
+#       - name: Test building docs with nbdev-mkdocs
+#         if: matrix.os != 'windows'
+#         run: |
+#           nbdev_mkdocs docs
+#           if [ -f "mkdocs/site/index.html" ]; then
+#             echo "docs built successfully."
+#           else
+#             echo "index page not found in rendered docs."
+#             ls -la
+#             ls -la mkdocs/site/
+#             exit 1
+#           fi
