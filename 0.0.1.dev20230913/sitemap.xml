@@ -13,12 +13,6 @@
         <xhtml:link rel="alternate" hreflang="en" href="https://faststream.airt.ai/0.0.1.dev20230913/"/>
     </url>
     <url>
-        <loc>https://faststream.airt.ai/0.0.1.dev20230913/contact/</loc>
-        <lastmod>2023-09-15</lastmod>
-        <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://faststream.airt.ai/0.0.1.dev20230913/contact/"/>
-    </url>
-    <url>
         <loc>https://faststream.airt.ai/0.0.1.dev20230913/features/</loc>
         <lastmod>2023-09-15</lastmod>
         <changefreq>daily</changefreq>
@@ -1229,12 +1223,6 @@
         <lastmod>2023-09-15</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://faststream.airt.ai/0.0.1.dev20230913/getting-started/dependencies/yield/"/>
-    </url>
-    <url>
-        <loc>https://faststream.airt.ai/0.0.1.dev20230913/getting-started/integrations/</loc>
-        <lastmod>2023-09-15</lastmod>
-        <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://faststream.airt.ai/0.0.1.dev20230913/getting-started/integrations/"/>
     </url>
     <url>
         <loc>https://faststream.airt.ai/0.0.1.dev20230913/getting-started/integrations/fastapi/</loc>
